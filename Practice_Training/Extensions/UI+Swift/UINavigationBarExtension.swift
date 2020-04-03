@@ -23,10 +23,11 @@ extension UINavigationController {
     }
     
     func removeNavBarSeperator(){
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.layoutIfNeeded()
-  
+        let navigationBar = navigationController?.navigationBar
+        let navigationBarAppearence = UINavigationBarAppearance()
+        
+        navigationBarAppearence.shadowColor = .clear
+        navigationBar?.scrollEdgeAppearance = navigationBarAppearence
     }
 }
 

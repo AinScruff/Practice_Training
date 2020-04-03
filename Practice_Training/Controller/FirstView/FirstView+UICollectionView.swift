@@ -20,6 +20,8 @@ extension FirstViewController {
             let section = self.sections[sectionIndex]
                 
             switch section.type {
+            case "mediumTable":
+                return self.createMediumSection(using: section)
             default:
                 return self.createFeaturedSection(using: section)
             }
@@ -51,6 +53,35 @@ extension FirstViewController {
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
             
+        return layoutSection
+    }
+    
+    func createMediumSection(using section: Section) -> NSCollectionLayoutSection {
+        
+        // Item Size
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.33))
+        
+        // Item
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
+        
+        // Group Size
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .fractionalWidth(0.55))
+        
+        // Group
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        
+        // Section
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
+        
+        // Section Header Size
+        let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(80))
+        
+        let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        
+        layoutSection.boundarySupplementaryItems = [layoutSectionHeader]
+        
         return layoutSection
     }
 }

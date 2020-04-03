@@ -54,10 +54,9 @@ class FeaturedCell: UICollectionViewCell, SelfConfiguringCell {
     let imageView: UIImageView = {
         let iv = UIImageView()
         
-        iv.layer.cornerRadius = 5
         iv.clipsToBounds = true
-        //iv.contentMode = .scaleAspectFit
-        
+        iv.contentMode = .scaleAspectFit
+    
         return iv
     }()
     
@@ -89,11 +88,12 @@ class FeaturedCell: UICollectionViewCell, SelfConfiguringCell {
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor)
+            stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
         ])
-        stackView.setCustomSpacing(10, after: seperator)
         
+        stackView.setCustomSpacing(10, after: seperator)
         stackView.setCustomSpacing(10, after: subtitleLabel)
+
     }
     
     func configure(with app: App) {
