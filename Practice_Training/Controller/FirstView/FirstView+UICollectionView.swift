@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension FirstViewController {
-     
+    
     // MARK: - CollectionView Compositional Layout Methods
         
     func createComposationalLayout() -> UICollectionViewLayout {
@@ -20,6 +20,8 @@ extension FirstViewController {
             let section = self.sections[sectionIndex]
                 
             switch section.type {
+            case "smallTable":
+                return self.createSmallSection(using: section)
             case "mediumTable":
                 return self.createMediumSection(using: section)
             default:
@@ -33,7 +35,9 @@ extension FirstViewController {
             
         return layout
     }
-        
+    
+    
+    // Featured Section
     func createFeaturedSection(using section: Section) -> NSCollectionLayoutSection{
         
         // Item Size
@@ -56,6 +60,7 @@ extension FirstViewController {
         return layoutSection
     }
     
+    // Medium Section
     func createMediumSection(using section: Section) -> NSCollectionLayoutSection {
         
         // Item Size
@@ -76,12 +81,42 @@ extension FirstViewController {
         layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
         
         // Section Header Size
+        layoutSection.boundarySupplementaryItems = [createSectionHeader()]
+        
+        return layoutSection
+    }
+    
+    // Small Section
+    func createSmallSection(using section: Section) -> NSCollectionLayoutSection {
+        
+        // Item Size
+        let layoutItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.2))
+        
+        // Item
+        let layoutItem = NSCollectionLayoutItem(layoutSize: layoutItemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
+        
+        // Group Size
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(200))
+        
+        // Group
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        
+        // Section
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        
+        // Section Header Size
+        layoutSection.boundarySupplementaryItems = [createSectionHeader()]
+        
+        return layoutSection
+    }
+    
+    func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(80))
         
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         
-        layoutSection.boundarySupplementaryItems = [layoutSectionHeader]
-        
-        return layoutSection
+        return layoutSectionHeader
     }
+        
 }

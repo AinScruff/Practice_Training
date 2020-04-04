@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		89069E082438C75500F75D3D /* SmallTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89069E072438C75500F75D3D /* SmallTableCell.swift */; };
 		89EBFBBC243755D1002F2328 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EBFBBB243755D1002F2328 /* AppDelegate.swift */; };
 		89EBFBBE243755D1002F2328 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EBFBBD243755D1002F2328 /* SceneDelegate.swift */; };
 		89EBFBC6243755D1002F2328 /* Practice_Training.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89EBFBC4243755D1002F2328 /* Practice_Training.xcdatamodeld */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		89069E072438C75500F75D3D /* SmallTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallTableCell.swift; sourceTree = "<group>"; };
 		89EBFBB8243755D1002F2328 /* Practice_Training.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Practice_Training.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89EBFBBB243755D1002F2328 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		89EBFBBD243755D1002F2328 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				89EBFBE124375654002F2328 /* FeaturedCell.swift */,
 				89EBFC1C243779FF002F2328 /* MediumCell.swift */,
 				89EBFC1E243782E3002F2328 /* SectionHeaderCollectionReusableView.swift */,
+				89069E072438C75500F75D3D /* SmallTableCell.swift */,
 			);
 			path = FirstPage;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				89EBFBEF24375658002F2328 /* FirstView+UICollectionView.swift in Sources */,
 				89EBFC1924375B28002F2328 /* PageModel.swift in Sources */,
 				89EBFC002437565F002F2328 /* UINavigationBarExtension.swift in Sources */,
+				89069E082438C75500F75D3D /* SmallTableCell.swift in Sources */,
 				89EBFBBE243755D1002F2328 /* SceneDelegate.swift in Sources */,
 				89EBFBF024375658002F2328 /* WalkthroughCollection+Extension.swift in Sources */,
 			);

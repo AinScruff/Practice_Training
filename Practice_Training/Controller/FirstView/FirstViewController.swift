@@ -35,7 +35,6 @@ class FirstViewController: UIViewController {
         
         setUpCollectionView()
      
-        
         createDatasource()
         reloadData()
     }
@@ -72,41 +71,43 @@ class FirstViewController: UIViewController {
         collectionView.register(FeaturedCell.self, forCellWithReuseIdentifier: FeaturedCell.reuseIdentifier)
         collectionView.register(MediumCell.self, forCellWithReuseIdentifier: MediumCell.reuseIdentifier)
         collectionView.register(SectionHeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderCollectionReusableView.reuseIdentifier)
+        collectionView.register(SmallTableCell.self, forCellWithReuseIdentifier: SmallTableCell.reuseIdentifier)
     }
 
-    private func configureCell<T: SelfConfiguringCell>(_ cellType: T.Type, with app: App, for indexPath: IndexPath) -> T {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseIdentifier, for: indexPath) as? T else { fatalError("Cannot dequeue") }
-        
-        
-        cell.configure(with: app)
-
-        return cell
-    }
-    
-    // MARK: - Methods
-    
     private func navigateToWalkThroughPage() {
         
         // If user hasn't viewed walkthrough then show
-        
         if UserDefaults.standard.bool(forKey: "hasViewedWalkthrough") {
              return
          }
          
-        
-         let vc = WalkthroughCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        let vc = WalkthroughCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
          
-         vc.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
-         self.present(vc, animated: true, completion: nil)
+        vc.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
+        self.present(vc, animated: true, completion: nil)
     }
     
+    
+    
+    // MARK: - Methods
+    
+    private func configureCell<T: SelfConfiguringCell>(_ cellType: T.Type, with app: App, for indexPath: IndexPath) -> T {
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseIdentifier, for: indexPath) as? T else { fatalError("Cannot dequeue") }
+                
+        cell.configure(with: app)
+
+        return cell
+    }
+
     private func createDatasource() {
         dataSource = UICollectionViewDiffableDataSource<Section, App>(collectionView: collectionView) { collectionView, indexPath, app in
              
             switch self.sections[indexPath.section].type {
             case "mediumTable":
                 return self.configureCell(MediumCell.self, with: app, for: indexPath)
+            case "smallTable":
+                return self.configureCell(SmallTableCell.self, with: app, for: indexPath)
             default:
                 return self.configureCell(FeaturedCell.self, with: app, for: indexPath)
             }

@@ -46,13 +46,13 @@ class MediumCell: UICollectionViewCell, SelfConfiguringCell {
     let buyButton: UIButton = {
         let bb = UIButton(type: .system)
         
-        bb.setImage(UIImage(systemName: "icloud.and.arrow."), for: .normal)
+        bb.setImage(UIImage(systemName: "icloud.and.arrow.down"), for: .normal)
         bb.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         
         return bb
     }()
     
- 
+    var btnTapAction : (()->())?
     
     // MARK: - Init
     
@@ -77,7 +77,6 @@ class MediumCell: UICollectionViewCell, SelfConfiguringCell {
         
         innerStackView.axis = .vertical
         
-        
         // OuterStackView
         let outerStackView = UIStackView(arrangedSubviews: [imageView, innerStackView, buyButton])
         contentView.addSubview(outerStackView)
@@ -92,6 +91,12 @@ class MediumCell: UICollectionViewCell, SelfConfiguringCell {
         nameLabel.text = app.name
         subtitleLabel.text = app.subheading
         imageView.image = UIImage(named: app.image)
+    }
+    
+    @objc func buttonTapped() {
+        print("Tapped!")
+        
+        btnTapAction?()
     }
 
     

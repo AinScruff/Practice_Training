@@ -16,8 +16,8 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let vc1 = createTabBarItem(tabBarTitle: "Composational Layout", tabBarImage: "icon_wallet", viewController: FirstViewController())
-        let vc2 = createTabBarItem(tabBarTitle: "Pure Collection View", tabBarImage: "icon_chart", viewController: SecondViewController())
+        let vc1 = createTabBarItem(tabBarTitle: "Composational Layout", tabBarImage: "square.stack.3d.up.fill", viewController: FirstViewController())
+        let vc2 = createTabBarItem(tabBarTitle: "Pure Collection View", tabBarImage: "gamecontroller", viewController: SecondViewController())
         
         viewControllers = [vc1, vc2]
     }
@@ -28,7 +28,7 @@ class TabBarViewController: UITabBarController {
         
         let navCont = UINavigationController(rootViewController: viewController)
         navCont.tabBarItem.title = tabBarTitle
-        navCont.tabBarItem.image = UIImage(named: tabBarImage)
+        navCont.tabBarItem.image = UIImage(systemName: tabBarImage)
 
         return navCont
     }
