@@ -16,7 +16,7 @@ class FirstViewController: UIViewController {
     
     fileprivate lazy var collectionView: UICollectionView = {
     
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: createComposationalLayout())
+        let cv = UICollectionView(frame: view.bounds, collectionViewLayout: createComposationalLayout())
 
         cv.backgroundColor = .systemBackground
         
@@ -64,8 +64,7 @@ class FirstViewController: UIViewController {
     private func setUpCollectionView() {
         
         view.addSubview(collectionView)
-        
-        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         // Register Cells
         collectionView.register(FeaturedCell.self, forCellWithReuseIdentifier: FeaturedCell.reuseIdentifier)
