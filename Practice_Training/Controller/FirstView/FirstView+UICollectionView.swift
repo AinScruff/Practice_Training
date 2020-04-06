@@ -9,7 +9,17 @@
 import Foundation
 import UIKit
 
-extension FirstViewController {
+extension FirstViewController: UICollectionViewDelegate {
+    
+    // MARK: - CollectionView Delegate
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let data = dataSource?.itemIdentifier(for: indexPath) else { return }
+        
+        print(data)
+    }
+    
     
     // MARK: - CollectionView Compositional Layout Methods
         

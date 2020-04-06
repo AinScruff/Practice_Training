@@ -52,7 +52,7 @@ class MediumCell: UICollectionViewCell, SelfConfiguringCell {
         return bb
     }()
     
-    var btnTapAction : (()->())?
+    var mark = 0
     
     // MARK: - Init
     
@@ -91,13 +91,19 @@ class MediumCell: UICollectionViewCell, SelfConfiguringCell {
         nameLabel.text = app.name
         subtitleLabel.text = app.subheading
         imageView.image = UIImage(named: app.image)
-    }
-    
-    @objc func buttonTapped() {
-        print("Tapped!")
-        
-        btnTapAction?()
+        buyButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
 
+    @objc func buttonTapped(sender: UIButton) {
+        
+        if mark == 0 {
+            buyButton.setImage(UIImage(systemName: "gamecontroller"), for: .normal)
+            mark += 1
+        } else {
+            buyButton.setImage(UIImage(systemName: "icloud.and.arrow.down"), for: .normal)
+            mark -= 1
+        }
+        
+    }
     
 }
