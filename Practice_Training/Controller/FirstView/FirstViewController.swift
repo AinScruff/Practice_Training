@@ -23,6 +23,27 @@ class FirstViewController: UIViewController {
         return cv
     }()
     
+    lazy var floatingButton: UIButton = {
+        let bb = UIButton(type: .custom)
+        let image = UIImage(named: "quill")?.withRenderingMode(.alwaysTemplate)
+        
+        // Prevent UITintColor to go gray when clicked
+        bb.adjustsImageWhenHighlighted = false
+        
+        bb.backgroundColor = UIColor(hex: "#00B2FFFF")
+        bb.layer.masksToBounds = true
+        
+        bb.setImage(image, for: .normal)
+        bb.tintColor = .white
+        
+        // Circle Button Frame
+        bb.frame = CGRect(x: 0, y: 0, width: 65, height: 65)
+        bb.layer.cornerRadius = bb.frame.width / 2
+       
+        bb.addTarget(self, action: #selector(addTest), for: .touchUpInside)
+        return bb
+    }()
+    
     var dataSource: UICollectionViewDiffableDataSource<Section, App>?
     
     
@@ -34,7 +55,8 @@ class FirstViewController: UIViewController {
         view.backgroundColor = .systemBackground
         
         setUpCollectionView()
-     
+        setUpFloatingButton()
+       
         createDatasource()
         reloadData()
     }
@@ -59,6 +81,11 @@ class FirstViewController: UIViewController {
         
         navigationController?.navBarColor(textColor: .label, backgroundColor: .systemBackground)
         navigationController?.removeNavBarSeperator()
+    }
+    
+    private func setUpFloatingButton() {
+        view.addSubview(floatingButton)
+        floatingButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, paddingBottom: 15, paddingTrailing: 15, width: 65, height: 65)
     }
 
     private func setUpCollectionView() {
@@ -140,4 +167,9 @@ class FirstViewController: UIViewController {
         dataSource?.apply(snapshot)
     }
     
+    // MARK: - Button Methods
+    
+    @objc private func addTest() {
+        floatingButton.pulsate()
+    }
 }

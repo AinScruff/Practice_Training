@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		89069E082438C75500F75D3D /* SmallTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89069E072438C75500F75D3D /* SmallTableCell.swift */; };
+		891F6714243F38CC00A327E7 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891F6713243F38CC00A327E7 /* UIButtonExtension.swift */; };
 		89EBFBBC243755D1002F2328 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EBFBBB243755D1002F2328 /* AppDelegate.swift */; };
 		89EBFBBE243755D1002F2328 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EBFBBD243755D1002F2328 /* SceneDelegate.swift */; };
 		89EBFBC6243755D1002F2328 /* Practice_Training.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89EBFBC4243755D1002F2328 /* Practice_Training.xcdatamodeld */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		89069E072438C75500F75D3D /* SmallTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallTableCell.swift; sourceTree = "<group>"; };
+		891F6713243F38CC00A327E7 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
 		89EBFBB8243755D1002F2328 /* Practice_Training.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Practice_Training.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89EBFBBB243755D1002F2328 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		89EBFBBD243755D1002F2328 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 		89EBFBF82437565F002F2328 /* UI+Swift */ = {
 			isa = PBXGroup;
 			children = (
+				891F6713243F38CC00A327E7 /* UIButtonExtension.swift */,
 				89EBFBF92437565F002F2328 /* UIColorExtension.swift */,
 				89EBFBFA2437565F002F2328 /* UIViewExtension.swift */,
 				89EBFBFB2437565F002F2328 /* UINavigationBarExtension.swift */,
@@ -345,6 +348,7 @@
 				89EBFBBC243755D1002F2328 /* AppDelegate.swift in Sources */,
 				89EBFBEF24375658002F2328 /* FirstView+UICollectionView.swift in Sources */,
 				89EBFC1924375B28002F2328 /* PageModel.swift in Sources */,
+				891F6714243F38CC00A327E7 /* UIButtonExtension.swift in Sources */,
 				89EBFC002437565F002F2328 /* UINavigationBarExtension.swift in Sources */,
 				89069E082438C75500F75D3D /* SmallTableCell.swift in Sources */,
 				89EBFBBE243755D1002F2328 /* SceneDelegate.swift in Sources */,
