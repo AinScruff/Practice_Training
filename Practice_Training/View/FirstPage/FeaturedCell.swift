@@ -8,14 +8,12 @@
 
 import UIKit
 
-class FeaturedCell: UICollectionViewCell, SelfConfiguringCell {
+class FeaturedCell: UICollectionViewCell {
    
-    // MARK: - Properties
-    
-    static let reuseIdentifier: String = "Featured"
-    
+    // MARK: - View Elements
     
     let seperator: UIView = {
+        
         let sep = UIView()
         
         sep.backgroundColor = .quaternaryLabel
@@ -25,6 +23,7 @@ class FeaturedCell: UICollectionViewCell, SelfConfiguringCell {
     }()
     
     let taglineLabel: UILabel = {
+        
         let tl = UILabel()
         
         tl.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 12, weight: .bold))
@@ -34,6 +33,7 @@ class FeaturedCell: UICollectionViewCell, SelfConfiguringCell {
     }()
     
     let nameLabel: UILabel = {
+        
         let nl = UILabel()
         
         nl.font = UIFont.preferredFont(forTextStyle: .title2)
@@ -43,6 +43,7 @@ class FeaturedCell: UICollectionViewCell, SelfConfiguringCell {
     }()
     
     let subtitleLabel: UILabel = {
+        
         let sl = UILabel()
         
         sl.font = UIFont.preferredFont(forTextStyle: .title2)
@@ -52,6 +53,7 @@ class FeaturedCell: UICollectionViewCell, SelfConfiguringCell {
     }()
     
     let imageView: UIImageView = {
+        
         let iv = UIImageView()
         
         iv.clipsToBounds = true
@@ -60,22 +62,40 @@ class FeaturedCell: UICollectionViewCell, SelfConfiguringCell {
         return iv
     }()
     
-    
-    // MARK: - Init
+
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setUp()
+        setupContraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - SelfConfiguringCell Protocol
+
+extension FeaturedCell: SelfConfiguringCell {
     
-    // MARK: - Setup Methods
+    static let reuseIdentifier: String = "Featured"
+
+    func configureViewElements(with app: App) {
+        
+        taglineLabel.text = app.tagline.uppercased()
+        nameLabel.text = app.name
+        subtitleLabel.text = app.subheading
+        imageView.image = UIImage(named: app.image)
+    }
+}
+
+// MARK: - Constraints
+
+extension FeaturedCell {
     
-    func setUp() {
+    private func setupContraints() {
         
         let stackView = UIStackView(arrangedSubviews: [seperator, taglineLabel, nameLabel, subtitleLabel, imageView])
         
@@ -95,14 +115,4 @@ class FeaturedCell: UICollectionViewCell, SelfConfiguringCell {
         stackView.setCustomSpacing(10, after: subtitleLabel)
 
     }
-    
-    func configure(with app: App) {
-        
-        taglineLabel.text = app.tagline.uppercased()
-        nameLabel.text = app.name
-        subtitleLabel.text = app.subheading
-        imageView.image = UIImage(named: app.image)
-        
-    }
-    
 }

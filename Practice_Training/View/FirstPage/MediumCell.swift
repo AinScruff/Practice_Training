@@ -8,12 +8,13 @@
 
 import UIKit
 
-class MediumCell: UICollectionViewCell, SelfConfiguringCell {
-    
-    
+class MediumCell: UICollectionViewCell {
+
     // MARK: - Properties
     
-    static let reuseIdentifier: String = "Medium"
+    var mark = 0
+    
+    // MARK: - View Elements
     
     let nameLabel: UILabel = {
         let nl = UILabel()
@@ -52,49 +53,57 @@ class MediumCell: UICollectionViewCell, SelfConfiguringCell {
         return bb
     }()
     
-    var mark = 0
-    
-    // MARK: - Init
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setUp()
+        setupContraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+// MARK: - SelfConfiguringCell Protocol
+
+extension MediumCell: SelfConfiguringCell {
     
-    // MARK: - Methods
+    static let reuseIdentifier: String = "Medium"
     
-    
-    private func setUp() {
+    func configureViewElements(with app: App) {
         
-        // InnerStackView
+        nameLabel.text = app.name
+        subtitleLabel.text = app.subheading
+        imageView.image = UIImage(named: app.image)
+        buyButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    }
+}
+
+// MARK: - Contraints
+
+extension MediumCell {
+    
+    private func setupContraints() {
         
         let innerStackView = UIStackView(arrangedSubviews: [nameLabel, subtitleLabel])
-        
         innerStackView.axis = .vertical
         
-        // OuterStackView
+
         let outerStackView = UIStackView(arrangedSubviews: [imageView, innerStackView, buyButton])
         contentView.addSubview(outerStackView)
         
         outerStackView.alignment = .center
         outerStackView.spacing = 10
         outerStackView.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, trailing: contentView.trailingAnchor)
-
     }
+}
+
+// MARK: - Button Methods
+
+extension MediumCell {
     
-    func configure(with app: App) {
-        nameLabel.text = app.name
-        subtitleLabel.text = app.subheading
-        imageView.image = UIImage(named: app.image)
-        buyButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-    }
-
-    @objc func buttonTapped(sender: UIButton) {
+    @objc private func buttonTapped(sender: UIButton) {
         
         if mark == 0 {
             buyButton.setImage(UIImage(systemName: "gamecontroller"), for: .normal)
@@ -103,7 +112,5 @@ class MediumCell: UICollectionViewCell, SelfConfiguringCell {
             buyButton.setImage(UIImage(systemName: "icloud.and.arrow.down"), for: .normal)
             mark -= 1
         }
-        
     }
-    
 }

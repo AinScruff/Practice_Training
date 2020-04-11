@@ -14,7 +14,9 @@ class SectionHeaderCollectionReusableView: UICollectionReusableView {
     
     static let reuseIdentifier = "SectionHeader"
     
+    // MARK: - View Elements
     let titleLabel: UILabel = {
+        
         let tl = UILabel()
         
         tl.font = UIFontMetrics.default.scaledFont(for: .systemFont(ofSize: 22, weight: .bold))
@@ -24,6 +26,7 @@ class SectionHeaderCollectionReusableView: UICollectionReusableView {
     }()
     
     let subtitleLabel: UILabel = {
+        
         let sl = UILabel()
         
         sl.textColor = .secondaryLabel
@@ -39,29 +42,32 @@ class SectionHeaderCollectionReusableView: UICollectionReusableView {
         return sv
     }()
     
+    // MARK: - Initialization
     
-    
-    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUp()
+        
+        setUpContraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - Constraints
+
+extension SectionHeaderCollectionReusableView {
     
-    // MARK: - Methods
-    
-    func setUp() {
-        
-        let stackView = UIStackView(arrangedSubviews: [separator, titleLabel, subtitleLabel])
-        
-        stackView.axis = .vertical
-        addSubview(stackView)
-        
-        separator.anchor(height: 1)
-        stackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, paddingBottom: 10)
-        stackView.setCustomSpacing(10, after: separator)
-    }
+    func setUpContraints() {
+          
+          let stackView = UIStackView(arrangedSubviews: [separator, titleLabel, subtitleLabel])
+          
+          stackView.axis = .vertical
+          addSubview(stackView)
+          
+          separator.anchor(height: 1)
+          stackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, paddingBottom: 10)
+          stackView.setCustomSpacing(10, after: separator)
+      }
 }

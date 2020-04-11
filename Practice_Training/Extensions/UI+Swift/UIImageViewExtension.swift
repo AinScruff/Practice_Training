@@ -9,10 +9,10 @@
 import Foundation
 import UIKit
 
-extension UIImageView
-{
-    func roundCornersForAspectFit(radius: CGFloat)
-    {
+extension UIImageView {
+    
+    func roundCornersForAspectFit(radius: CGFloat) {
+        
         if let image = self.image {
 
             //calculate drawingRect

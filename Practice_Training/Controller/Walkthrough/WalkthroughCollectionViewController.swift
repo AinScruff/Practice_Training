@@ -8,16 +8,17 @@
 
 import UIKit
 
-
 class WalkthroughCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     // MARK: - Properties
     
     let reuseIdentifier = "Cell"
-    
-    var endPage = 0
-    
+
     let pages = [ Page(imageName: "apple", titleHeader: "Apple", bodyText: "Buy now from Apple INC."), Page(imageName: "android", titleHeader: "Android", bodyText: "Buy Android Phones"), Page(imageName: "linux", titleHeader: "Linux", bodyText: "Linux Pengu pengu pengu"), Page(imageName: "windows", titleHeader: "Windows", bodyText: "Affordable OS bla bla bla")]
+    
+    var pageNumber = 0
+    
+    // MARK: - View Elements
     
     private let previousButton: UIButton = {
         let button = UIButton(type: .system)
@@ -57,18 +58,28 @@ class WalkthroughCollectionViewController: UICollectionViewController, UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView.backgroundColor = .white
-        
-        // Register cell classes
-        collectionView!.register(WalkthroughCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        swipeControl()
-        
+        setUpCollectionView()
         setUpButton()
     }
     
-    // MARK: - Setup Methods
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNeedsStatusBarAppearanceUpdate()
+    }
     
-    private func swipeControl() {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        .darkContent
+    }
+}
+
+// MARK: - Contraints
+
+extension WalkthroughCollectionViewController {
+  
+    private func setUpCollectionView() {
+        
+        collectionView.backgroundColor = .white
+        collectionView!.register(WalkthroughCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.isPagingEnabled = true
         
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
@@ -85,8 +96,11 @@ class WalkthroughCollectionViewController: UICollectionViewController, UICollect
         view.addSubview(bottomControlsStackView)
         bottomControlsStackView.anchor(left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, height: 50)
     }
-    
-    // MARK: - Button Selector Methods
+}
+
+// MARK: - Button Selector Methods
+
+extension WalkthroughCollectionViewController {
     
     @objc private func handleNext() {
         
@@ -97,18 +111,45 @@ class WalkthroughCollectionViewController: UICollectionViewController, UICollect
         
         let nextIndex = min(pageControl.currentPage + 1, pages.count - 1)
         let indexPath = IndexPath(item: nextIndex, section: 0)
-    
+      
         pageControl.currentPage = nextIndex
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
-    
+      
     @objc private func handlePrev() {
-        
+          
         let prevIndex = max(pageControl.currentPage - 1, 0)
         let indexPath = IndexPath(item: prevIndex, section: 0)
-        
+          
         pageControl.currentPage = prevIndex
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
+}
+
+// MARK: - Swipe Methods
+
+extension WalkthroughCollectionViewController {
+    
+    // Handle Swipe Gesture to Prev/Next Controller
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+        let x = targetContentOffset.pointee.x
+        
+        pageControl.currentPage = Int(x / view.frame.width)
+        if scrollView.panGestureRecognizer.translation(in: scrollView.superview).x > 0 {
+            if pageNumber != 0 {
+                pageNumber -= 1
+            }
+        } else {
+            if pageNumber == pages.count - 1 {
+               UserDefaults.standard.set(true, forKey: "hasViewedWalkthrough")
+               self.dismiss(animated: true, completion: nil)
+            } else {
+               pageNumber += 1
+            }
+        }
+        
+        
     }
 
 }

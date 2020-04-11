@@ -13,6 +13,7 @@ extension UIColor {
     
     // HEX STRING FORMAT: - (# - RR - GG - BB - AA)
     public convenience init?(hex: String) {
+        
         let r, g, b, a: CGFloat
 
         if hex.hasPrefix("#") {

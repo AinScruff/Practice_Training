@@ -8,13 +8,12 @@
 
 import UIKit
 
-class SmallTableCell: UICollectionViewCell, SelfConfiguringCell {
+class SmallTableCell: UICollectionViewCell{
    
-    // MARK: - Properties
-    
-    static let reuseIdentifier: String = "Small Table"
-    
+    // MARK: - View Elements
+
     let nameLabel: UILabel = {
+        
         let nl = UILabel()
         
         nl.font = UIFont.preferredFont(forTextStyle: .title2)
@@ -24,6 +23,7 @@ class SmallTableCell: UICollectionViewCell, SelfConfiguringCell {
     }()
     
     let imageView: UIImageView = {
+        
         let iv = UIImageView()
         
         iv.layer.cornerRadius = 5
@@ -32,35 +32,42 @@ class SmallTableCell: UICollectionViewCell, SelfConfiguringCell {
         return iv
     }()
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setUp()
+        setupContraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - SelfConfiguringCell Protocol
+
+extension SmallTableCell: SelfConfiguringCell {
     
-    
-    // MARK: - Methods
-    
-    func setUp() {
+    static let reuseIdentifier: String = "Small Table"
+     
+    func configureViewElements(with app: App) {
+        nameLabel.text = app.name
+        imageView.image = UIImage(named: app.image)
+    }
+}
+
+// MARK: - Contraints
+
+extension SmallTableCell {
+    func setupContraints() {
         
         let stackView = UIStackView(arrangedSubviews: [imageView, nameLabel])
         
         contentView.addSubview(stackView)
         
-        
         stackView.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: contentView.bottomAnchor)
         stackView.alignment = .center
         stackView.spacing = 20
-    }
-    
-    func configure(with app: App) {
-        nameLabel.text = app.name
-        imageView.image = UIImage(named: app.image)
     }
 }

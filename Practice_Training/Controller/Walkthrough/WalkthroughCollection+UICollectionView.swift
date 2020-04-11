@@ -18,11 +18,12 @@ extension WalkthroughCollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! WalkthroughCollectionViewCell
     
         // Configure the cell
         cell.page = pages[indexPath.row]
-        
+   
         return cell
     }
     

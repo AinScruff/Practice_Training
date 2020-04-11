@@ -12,6 +12,7 @@ import UIKit
 extension UINavigationController {
     
     func navBarColor(textColor: UIColor, backgroundColor: UIColor) {
+        
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
         navBarAppearance.titleTextAttributes = [.foregroundColor: textColor]
@@ -23,6 +24,7 @@ extension UINavigationController {
     }
     
     func removeNavBarSeperator(){
+        
         let navigationBar = navigationController?.navigationBar
         let navigationBarAppearence = UINavigationBarAppearance()
         

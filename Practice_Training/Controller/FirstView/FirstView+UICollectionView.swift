@@ -9,21 +9,81 @@
 import Foundation
 import UIKit
 
+// MARK: - CollectionView Delegate
+
 extension FirstViewController: UICollectionViewDelegate {
     
-    // MARK: - CollectionView Delegate
-
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard let data = dataSource?.itemIdentifier(for: indexPath) else { return }
         
         print(data)
     }
-    
-    
-    // MARK: - CollectionView Compositional Layout Methods
+}
+
+// MARK: - CollectionView DataSource
+
+extension FirstViewController {
+   
+    func configureCell<T: SelfConfiguringCell>(_ cellType: T.Type, with app: App, for indexPath: IndexPath) -> T {
+           
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseIdentifier, for: indexPath) as? T else { fatalError("Cannot dequeue") }
+                   
+        cell.configureViewElements(with: app)
+
+        return cell
+    }
+
+    func createDatasource() {
         
-    func createComposationalLayout() -> UICollectionViewLayout {
+        dataSource = UICollectionViewDiffableDataSource<Section, App>(collectionView: collectionView) { collectionView, indexPath, app in
+                
+            switch self.sections[indexPath.section].type {
+            case "mediumTable":
+                return self.configureCell(MediumCell.self, with: app, for: indexPath)
+            case "smallTable":
+                return self.configureCell(SmallTableCell.self, with: app, for: indexPath)
+            default:
+                return self.configureCell(FeaturedCell.self, with: app, for: indexPath)
+            }
+        }
+           
+        dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderCollectionReusableView.reuseIdentifier, for: indexPath) as? SectionHeaderCollectionReusableView else { return  nil }
+               
+            guard let firstApp = self?.dataSource?.itemIdentifier(for: indexPath) else { return nil }
+            guard let section = self?.dataSource?.snapshot().sectionIdentifier(containingItem: firstApp) else { return nil }
+               
+            if section.title.isEmpty { return nil }
+               
+            sectionHeader.titleLabel.text = section.title
+            sectionHeader.subtitleLabel.text = section.subtitle
+               
+            return sectionHeader
+        }
+    }
+       
+    func reloadData() {
+        
+        var snapshot = NSDiffableDataSourceSnapshot<Section, App>()
+           
+        snapshot.appendSections(sections)
+           
+        for section in sections {
+            snapshot.appendItems(section.items, toSection: section)
+        }
+           
+        dataSource?.apply(snapshot)
+      }
+}
+
+
+
+// MARK: - CollectionView Compositional Layout
+
+extension FirstViewController {
+    
+    func createCompositionalLayout() -> UICollectionViewLayout {
             
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnvironment in
                 
@@ -46,87 +106,68 @@ extension FirstViewController: UICollectionViewDelegate {
         return layout
     }
     
+    // MARK: - Setup Sections
     
-    // Featured Section
-    func createFeaturedSection(using section: Section) -> NSCollectionLayoutSection{
+    private func createFeaturedSection(using section: Section) -> NSCollectionLayoutSection{
         
-        // Item Size
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         
-        // Item
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
                
-        // Group Size
         let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(350))
         
-        // Group
         let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
         
-        // Section
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
             
         return layoutSection
     }
     
-    // Medium Section
-    func createMediumSection(using section: Section) -> NSCollectionLayoutSection {
+    private func createMediumSection(using section: Section) -> NSCollectionLayoutSection {
         
-        // Item Size
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.33))
         
-        // Item
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5)
         
-        // Group Size
         let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .fractionalWidth(0.55))
         
-        // Group
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
         
-        // Section
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
         
-        // Section Header Size
         layoutSection.boundarySupplementaryItems = [createSectionHeader()]
         
         return layoutSection
     }
     
-    // Small Section
-    func createSmallSection(using section: Section) -> NSCollectionLayoutSection {
+    private func createSmallSection(using section: Section) -> NSCollectionLayoutSection {
         
-        // Item Size
         let layoutItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.2))
         
-        // Item
         let layoutItem = NSCollectionLayoutItem(layoutSize: layoutItemSize)
         layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
         
-        // Group Size
         let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(200))
         
-        // Group
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
         
-        // Section
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         
-        // Section Header Size
         layoutSection.boundarySupplementaryItems = [createSectionHeader()]
         
         return layoutSection
     }
     
-    func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+    private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        
         let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(80))
         
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         
         return layoutSectionHeader
     }
-        
 }

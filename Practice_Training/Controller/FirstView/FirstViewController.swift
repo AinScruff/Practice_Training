@@ -14,16 +14,21 @@ class FirstViewController: UIViewController {
     
     let sections = Bundle.main.decode([Section].self, from: "appstore.json")
     
-    fileprivate lazy var collectionView: UICollectionView = {
+    var dataSource: UICollectionViewDiffableDataSource<Section, App>?
     
-        let cv = UICollectionView(frame: view.bounds, collectionViewLayout: createComposationalLayout())
+    // MARK: - View Elements
+    
+    lazy var collectionView: UICollectionView = {
+    
+        let cv = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
 
         cv.backgroundColor = .systemBackground
         
         return cv
     }()
     
-    lazy var floatingButton: UIButton = {
+    private let floatingButton: UIButton = {
+        
         let bb = UIButton(type: .custom)
         let image = UIImage(named: "quill")?.withRenderingMode(.alwaysTemplate)
         
@@ -41,12 +46,10 @@ class FirstViewController: UIViewController {
         bb.layer.cornerRadius = bb.frame.width / 2
        
         bb.addTarget(self, action: #selector(addTest), for: .touchUpInside)
+        
         return bb
     }()
-    
-    var dataSource: UICollectionViewDiffableDataSource<Section, App>?
-    
-    
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -69,21 +72,24 @@ class FirstViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         navigateToWalkThroughPage()
     }
-    
-    
-    // MARK: - Setup Methods
+}
 
+// MARK: - Constraints
+
+extension FirstViewController {
+    
     private func setUpNavBar() {
         
         navigationItem.title = "First"
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .automatic
         
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navBarColor(textColor: .label, backgroundColor: .systemBackground)
         navigationController?.removeNavBarSeperator()
     }
     
     private func setUpFloatingButton() {
+        
         view.addSubview(floatingButton)
         floatingButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, paddingBottom: 15, paddingTrailing: 15, width: 65, height: 65)
     }
@@ -102,72 +108,24 @@ class FirstViewController: UIViewController {
     }
 
     private func navigateToWalkThroughPage() {
-        
-        // If user hasn't viewed walkthrough then show
-        if UserDefaults.standard.bool(forKey: "hasViewedWalkthrough") {
-             return
-         }
+        if userSecondTime(){
+            return
+        }
          
         let vc = WalkthroughCollectionViewController(collectionViewLayout: UICollectionViewFlowLayout())
          
         vc.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
         self.present(vc, animated: true, completion: nil)
     }
-    
-    
-    
-    // MARK: - Methods
-    
-    private func configureCell<T: SelfConfiguringCell>(_ cellType: T.Type, with app: App, for indexPath: IndexPath) -> T {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseIdentifier, for: indexPath) as? T else { fatalError("Cannot dequeue") }
-                
-        cell.configure(with: app)
+}
 
-        return cell
-    }
+// MARK: - Methods
 
-    private func createDatasource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, App>(collectionView: collectionView) { collectionView, indexPath, app in
-             
-            switch self.sections[indexPath.section].type {
-            case "mediumTable":
-                return self.configureCell(MediumCell.self, with: app, for: indexPath)
-            case "smallTable":
-                return self.configureCell(SmallTableCell.self, with: app, for: indexPath)
-            default:
-                return self.configureCell(FeaturedCell.self, with: app, for: indexPath)
-            }
-        }
-        
-        dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderCollectionReusableView.reuseIdentifier, for: indexPath) as? SectionHeaderCollectionReusableView else { return  nil }
-            
-            guard let firstApp = self?.dataSource?.itemIdentifier(for: indexPath) else { return nil }
-            guard let section = self?.dataSource?.snapshot().sectionIdentifier(containingItem: firstApp) else { return nil }
-            
-            if section.title.isEmpty { return nil }
-            
-            sectionHeader.titleLabel.text = section.title
-            sectionHeader.subtitleLabel.text = section.subtitle
-            
-            return sectionHeader
-        }
-    }
+extension FirstViewController {
     
-    private func reloadData() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, App>()
-        
-        snapshot.appendSections(sections)
-        
-        for section in sections {
-            snapshot.appendItems(section.items, toSection: section)
-        }
-        
-        dataSource?.apply(snapshot)
+    private func userSecondTime() -> Bool {
+        return UserDefaults.standard.bool(forKey: "hasViewedWalkthrough")
     }
-    
-    // MARK: - Button Methods
     
     @objc private func addTest() {
         floatingButton.pulsate()
