@@ -17,7 +17,10 @@ class TabBarViewController: UITabBarController {
         super.viewDidLoad()
         
         let vc1 = createTabBarItem(tabBarTitle: "Composational Layout", tabBarImage: "square.stack.3d.up.fill", viewController: FirstViewController())
-        let vc2 = createTabBarItem(tabBarTitle: "Pure Collection View", tabBarImage: "gamecontroller", viewController: SecondViewController())
+        let vc2 = SecondViewController()
+        
+        vc2.tabBarItem.title = "PureCollectionView"
+        vc2.tabBarItem.image = UIImage(systemName: "gamecontroller")
         
         viewControllers = [vc1, vc2]
     }
