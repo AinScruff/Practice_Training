@@ -57,8 +57,9 @@ extension UIView {
         
     }
     
-    
-    
+    func fillSuperView() {
+        anchor(top: superview?.topAnchor, leading: superview?.leadingAnchor, bottom: superview?.bottomAnchor, trailing: superview?.trailingAnchor)
+    }
 }
 
 

@@ -214,9 +214,9 @@
 			children = (
 				891F6713243F38CC00A327E7 /* UIButtonExtension.swift */,
 				89EBFBF92437565F002F2328 /* UIColorExtension.swift */,
-				89EBFBFA2437565F002F2328 /* UIViewExtension.swift */,
 				89EBFBFB2437565F002F2328 /* UINavigationBarExtension.swift */,
 				89EBFC2024378A36002F2328 /* UIImageViewExtension.swift */,
+				89EBFBFA2437565F002F2328 /* UIViewExtension.swift */,
 			);
 			path = "UI+Swift";
 			sourceTree = "<group>";
