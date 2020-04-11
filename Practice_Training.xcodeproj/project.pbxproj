@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		89069E082438C75500F75D3D /* SmallTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89069E072438C75500F75D3D /* SmallTableCell.swift */; };
 		891F6714243F38CC00A327E7 /* UIButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891F6713243F38CC00A327E7 /* UIButtonExtension.swift */; };
+		895EBD892441ED07002AA9BA /* SecondView+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895EBD882441ED07002AA9BA /* SecondView+UICollectionView.swift */; };
+		895EBD8E2441F1C9002AA9BA /* SecondViewSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895EBD8D2441F1C9002AA9BA /* SecondViewSectionHeaderView.swift */; };
 		89EBFBBC243755D1002F2328 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EBFBBB243755D1002F2328 /* AppDelegate.swift */; };
 		89EBFBBE243755D1002F2328 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EBFBBD243755D1002F2328 /* SceneDelegate.swift */; };
 		89EBFBC6243755D1002F2328 /* Practice_Training.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 89EBFBC4243755D1002F2328 /* Practice_Training.xcdatamodeld */; };
@@ -39,6 +41,8 @@
 /* Begin PBXFileReference section */
 		89069E072438C75500F75D3D /* SmallTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallTableCell.swift; sourceTree = "<group>"; };
 		891F6713243F38CC00A327E7 /* UIButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtension.swift; sourceTree = "<group>"; };
+		895EBD882441ED07002AA9BA /* SecondView+UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SecondView+UICollectionView.swift"; sourceTree = "<group>"; };
+		895EBD8D2441F1C9002AA9BA /* SecondViewSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewSectionHeaderView.swift; sourceTree = "<group>"; };
 		89EBFBB8243755D1002F2328 /* Practice_Training.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Practice_Training.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89EBFBBB243755D1002F2328 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		89EBFBBD243755D1002F2328 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +83,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		895EBD8A2441F17B002AA9BA /* SecondView */ = {
+			isa = PBXGroup;
+			children = (
+				895EBD8D2441F1C9002AA9BA /* SecondViewSectionHeaderView.swift */,
+			);
+			path = SecondView;
+			sourceTree = "<group>";
+		};
 		89EBFBAF243755D1002F2328 = {
 			isa = PBXGroup;
 			children = (
@@ -135,7 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				89EBFBDE24375654002F2328 /* Walkthrough */,
-				89EBFBE024375654002F2328 /* FirstPage */,
+				89EBFBE024375654002F2328 /* FirstView */,
+				895EBD8A2441F17B002AA9BA /* SecondView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -148,7 +161,7 @@
 			path = Walkthrough;
 			sourceTree = "<group>";
 		};
-		89EBFBE024375654002F2328 /* FirstPage */ = {
+		89EBFBE024375654002F2328 /* FirstView */ = {
 			isa = PBXGroup;
 			children = (
 				89EBFBE124375654002F2328 /* FeaturedCell.swift */,
@@ -156,7 +169,7 @@
 				89EBFC1C243779FF002F2328 /* MediumCell.swift */,
 				89EBFC1E243782E3002F2328 /* SectionHeaderCollectionReusableView.swift */,
 			);
-			path = FirstPage;
+			path = FirstView;
 			sourceTree = "<group>";
 		};
 		89EBFBE424375658002F2328 /* Controller */ = {
@@ -228,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				89EBFBED24375658002F2328 /* SecondViewController.swift */,
+				895EBD882441ED07002AA9BA /* SecondView+UICollectionView.swift */,
 			);
 			path = SecondView;
 			sourceTree = "<group>";
@@ -318,6 +332,7 @@
 				89EBFBF224375658002F2328 /* WalkthroughCollection+UICollectionView.swift in Sources */,
 				89EBFC1B24375B2F002F2328 /* Section.swift in Sources */,
 				89EBFC1424375AF7002F2328 /* App.swift in Sources */,
+				895EBD892441ED07002AA9BA /* SecondView+UICollectionView.swift in Sources */,
 				89EBFBF424375658002F2328 /* SecondViewController.swift in Sources */,
 				89EBFBF324375658002F2328 /* TabBarViewController.swift in Sources */,
 				89EBFC042437569A002F2328 /* Bundle-Decodable.swift in Sources */,
@@ -337,6 +352,7 @@
 				89EBFC002437565F002F2328 /* UINavigationBarExtension.swift in Sources */,
 				89069E082438C75500F75D3D /* SmallTableCell.swift in Sources */,
 				89EBFBBE243755D1002F2328 /* SceneDelegate.swift in Sources */,
+				895EBD8E2441F1C9002AA9BA /* SecondViewSectionHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
